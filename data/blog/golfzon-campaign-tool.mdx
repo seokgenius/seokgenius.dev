@@ -1,0 +1,38 @@
+---
+title: 'Golfzon - Campaign tool'
+date: '2025-10-01'
+tags: ['golfzon', 'vue', 'typescript', 'backoffice']
+draft: false
+summary: '골프존의 메시지 및 푸시 통합 발송 내부 백오피스 캠페인 도구 개발 프로젝트입니다. Vite, Vue 3, Pinia, Element Plus 등을 적용하여 대폭적인 성능 향상과 아키텍처 개선을 수행했습니다.'
+---
+
+# Golfzon - Campaign tool (캠페인 백오피스 개발)
+
+효율적인 타겟 마케팅 수행을 위해 고객 추출 조건을 고도화하고, 발송 채널별 피로도 관리 및 사후 분석 기능을 강화하여 캠페인 운영의 효율성과 정확도를 높이는 프로젝트입니다.
+
+## 🛠️ 기술 스택 (Spec)
+
+- **Runtime & Language**: Node.js `22.14.0`, TypeScript `5.9.3`
+- **Framework**: Vue.js `3.5.25` (Composition API)
+- **State Management**: Pinia
+- **Build Tool**: Vite `7.3.1`
+- **UI Library**: Element Plus
+- **Styling**: Tailwind CSS
+- **Form Validation**: Vee-Validate + Zod
+
+## 🚀 주요 역할 및 수행 내용
+
+### 1. 차세대 기술 스택 도입 및 레거시 청산
+
+- 기존의 골프존 백오피스 레거시가 모두 `vue-cli` + `vuetify` 기반이었으나, 개발 생산성과 모던 웹 생태계 대응을 위해 **Vite + Element Plus + Tailwind CSS**의 조합을 적극 도입하였습니다.
+- 이를 통해 개발 서빙 및 프로덕션 빌드 속도를 획기적으로 개선하여 로컬 개발 생산성을 극대화하였습니다.
+
+### 2. 고도화된 타겟 마케팅 및 발송 관리 시스템 설계
+
+- 골프존 시뮬레이터 이용자의 라운드 기록, 디바이스 상태 등 방대한 이용 데이터를 기반으로 세분화된 타겟 광고 그룹을 추출하는 조건을 구현했습니다.
+- GS 광고 연동, 모바일 앱 푸시, 그리고 SMS/LMS 발송 채널 통합 연계와 피로도 제어 모델을 도입하여 광고 도달율을 상승시켰습니다.
+
+### 3. AI Agent 기반의 협업 규칙 수립
+
+- Cursor IDE의 **Agent 모드** 개발 표준을 도입하기 위해 `.cursor/rules` 및 `.mdc` 파일에 아키텍처 규칙과 프로젝트 코딩 컨벤션을 정의했습니다.
+- Git 브랜치 전략 및 커밋 컨벤션을 명문화하여 팀 협업의 퀄리티를 대폭 상향 평준화했습니다.

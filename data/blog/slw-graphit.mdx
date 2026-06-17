@@ -1,0 +1,37 @@
+---
+title: 'SLW - Graphit'
+date: '2024-03-05'
+tags: ['slw', 'nextjs', 'typescript', 'tailwind']
+draft: false
+summary: 'Next.js 15, React 19, Zustand, Tailwind CSS 및 Shadcn/ui 스택을 사용하여 구축된 신규 웹 어플리케이션 개발 프로젝트입니다.'
+---
+
+# SLW - Graphit
+
+완전한 모던 스택(Next.js 15, React 19)을 탑재하여 최상급의 렌더링 성능과 모듈러 아키텍처를 실현한 고해상도 그래픽 & 대시보드 성격의 프론트엔드 프로젝트입니다.
+
+## 🛠️ 기술 스택 (Spec)
+
+- **Node.js**: `22.16.0`
+- **Framework**: Next.js `15` + React `19`
+- **State Management**: Zustand
+- **Styling**: Tailwind CSS + Shadcn/ui + SCSS
+- **Deployment**: Vercel (자동 배포 파이프라인 구성)
+- **Linter/Formatter**: ESLint (Airbnb 규칙 준수) + Prettier + Husky (Git GitHooks)
+- **배포 웹사이트**: [slw-graphit-front.vercel.app](https://slw-graphit-front.vercel.app/)
+
+## 🚀 주요 역할 및 수행 내용
+
+### 1. 최첨단 Next.js 15 및 React 19 아키텍처 수립
+
+- Next.js 15의 최신 App Router 및 React Server Component(RSC) 아키텍처 규칙을 도입하여 첫 로딩 바이트 크기와 웹 성능 핵심 지표(LCP, CLS 등)를 대폭 개선하였습니다.
+
+### 2. 컴포넌트 표준 정립 및 디자인 시스템 바인딩
+
+- **Shadcn/ui & Tailwind CSS**를 유기적으로 확장하여 재사용 가능한 컴포넌트 세트를 만들고, 다채롭고 직관적인 UI 구성을 보장하였습니다.
+- 상태 라이브러리인 **Zustand**로 전역 렌더 상태를 통제하여 프론트 성능 낭비를 막고 데이터 일관성을 지켰습니다.
+
+### 3. Vercel CI/CD 완전 배포 파이프라인 개발
+
+- Bitbucket 코드를 자동으로 GitHub에 동기화하고 연동하여, 커밋 푸시 시 실시간으로 프로덕션 빌드 유효성을 검사하고 Vercel에 안전하게 패치 및 무중단 배포를 이어가는 파이프라인을 커스텀 구축했습니다.
+- Git Hook(Husky)을 연동하여 커밋 시 포맷 체크(ESLint, Prettier)가 엄격하게 진행되도록 조치했습니다.
