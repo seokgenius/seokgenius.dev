@@ -1,33 +1,53 @@
 ---
 title: 'Kiwoom heroes Admin'
-date: '2023-09-10'
-tags: ['kiwoom', 'vue', 'typescript', 'scss', 'backoffice']
+date: '2024-08-23'
+tags: ['vue', 'typescript', 'scss', 'backoffice']
 draft: false
 summary: '키움히어로즈 야구단 공식 모바일 앱의 데이터를 유기적으로 가공하고 통제하기 위한 대규모 권한 제어형 어드민 백오피스 개발 프로젝트입니다.'
+repositoryUrl: https://github.com/seokgenius/kiwoom-admin
 ---
 
-# Kiwoom heroes Admin (키움히어로즈 관리자 시스템)
+# Kiwoom heroes Admin (키움히어로즈 통합 관리자 시스템 개발)
 
-프로 야구단 키움히어로즈의 공식 구단 모바일 애플리케이션에 적재되는 공지사항, 경기 기록, 티켓 발송 및 선수 데이터 정보 등을 안정적으로 관리하고 편집하는 백오피스 개발 프로젝트입니다.
+프로 야구단 키움히어로즈의 공식 구단 모바일 애플리케이션 및 팬 플랫폼의 전체적인 운영을 담당하는 **통합 관리자(Back-office) 시스템** 구축 프로젝트입니다. 회원 관리부터 경기 직관 인증, 라이브 이벤트 당첨자 관리, 콘텐츠 제어까지 앱 서비스 운영에 필요한 모든 비즈니스 로직을 체계적으로 가공하고 통제하는 Vue.js 기반 백오피스입니다.
+
+---
 
 ## 🛠️ 기술 스택 (Spec)
 
-- **Framework**: Vue.js `2.x` (TypeScript 구성)
-- **State Management**: Vuex (`vuex-module-decorators` 및 `vuex-class` 활용)
-- **Styling**: SCSS (직접 마크업 퍼블리싱 담당)
-- **Language**: TypeScript
+- **Framework**: Vue.js `2.6.11` (Vue Router `3.2.0`, Vue Class Component, Vue Property Decorator)
+- **State Management**: Vuex `3.4.0` (vuex-class, vuex-module-decorators 모듈화 적용)
+- **Styling & Markup**: SCSS, Gulp (웹퍼블리싱 scss 컴파일), Bootstrap `5.1.3` (확장 커스텀 `bootstrap-extended/` 적용)
+- **HTTP Client & Security**: Axios 기반 커스텀 통신 모듈 (`src/restApi/`), JWT 토큰 기반 인증 (`jwtService.ts`)
+- **Validation**: Vee-Validate `3.4.5`
+- **Language**: TypeScript `3.9.3` (엄격한 타입 시스템을 통한 관리 인프라 안정성 확보)
+- **Third Party Libraries**: Tinymce-vue (Rich Text Editor), flatpickr (달력 피커), dayjs
+- **Build Tool**: Vue CLI (`vue.config.js` 커스텀), Webpack, Babel
+
+---
 
 ## 🚀 주요 역할 및 수행 내용
 
-### 1. 동적 레이아웃 템플릿 아키텍처 설계
+### 1. 종합 구단 비즈니스 및 실시간 이벤트 제어 로직 구현
 
-- 다양한 종류의 메뉴와 데이터 폼 레이아웃을 효율적으로 렌더링하기 위해, Vue의 동적 컴포넌트(`<component :is="...">`) 스펙을 응용하여 유연한 어드민 레이아웃 구조를 완성하였습니다.
-- 새로운 양식 메뉴가 추가될 때 공통 스펙만 상속받아 쉽게 뷰를 전개하도록 코드 상속 모델을 정립했습니다.
+어드민 백오피스의 본질에 맞추어 팬 플랫폼 앱의 대규모 비즈니스 서비스 레이어를 기능별 클래스로 완전 모듈화했습니다.
 
-### 2. 라우터 네비게이션 가드 기반의 페이지 권한 제어
+- **회원 및 멤버십 관리**: 일반 사용자 및 관리자 권한 통제(`UserManageModule`, `AdminManageModule`)와 등급/포인트 내역 조회 및 차등 혜택 관리(`MembershipService.ts`, `PointService.ts`)를 구축했습니다.
+- **경기 및 직관 이벤트 운영**: 야구 경기장 체크인(`DirectViewService.ts`)과 경기 승리 예측(`GameService.ts`) 실시간 참여 데이터를 수집 및 관리하고, 실시간 경품(`Gift`), 뱃지(`Badge`), 추첨 당첨자(`Winner`) 관리를 종합 지원하는 이벤트 모듈(`EventService.ts`)을 구현했습니다.
+- **커뮤니티 및 콘텐츠 모니터링**: 팬들이 작성한 악성 게시글 신고(`Report`) 내역을 접수하여 처리하는 타임라인 감시 기능(`CommunityService.ts`)과 메인 배너 전시 영역을 제어하는 관리 페이지(`BannerService.ts`)를 설계했습니다.
+- **시스템 환경 및 타겟 푸시 발송**: 앱 공지사항, 자주 묻는 질문(FAQ), 서비스 약관 및 버전 관리(`AppSettingService.ts`)를 시스템화하고, 전체 팬 또는 특정 타겟 팬 그룹을 대상으로 마케팅 푸시 알림을 발송하고 이력을 추적하는 모듈(`NotiService.ts`)을 온보딩했습니다.
 
-- 다수의 부서 및 파트너사가 공동 사용하는 어드민 특성에 맞춰, **Route Meta** 값에 허용 권한 리스트를 내장하고, 라우터 네비게이션 가드(`beforeEach`)를 통해 부적절한 사용자 접근을 원천 차단하는 보안 환경을 구축했습니다.
+### 2. 웹퍼블리싱 파이프라인 단일화 및 해상도 가이드 규격화
 
-### 3. 실시간 다차원 검색 필터링 및 모션 트랜지션
+- **Gulp 기반 SCSS 컴파일**: 퍼블리싱 생산성 극대화를 위해 Gulp 태스크(`gulp dev`)를 정의하여 SCSS 전처리기 환경을 구축하고, 폰트(Noto Sans KR) 및 사이드바(`_sidebar.scss`), 테이블(`_table.scss`) 등 공통 마크업 요소를 고도화했습니다.
+- **화면 UI 규격화**: 관리자가 최적의 정보 밀도로 모니터링할 수 있도록 해상도 규격을 가로 `min-width: 1680px` ~ `max-width: 1920px`로 통일하고 좌측 LNB 사이드바를 `280px`로 고정한 고밀도 그리드 레이아웃을 구현했습니다.
 
-- 수만 건의 구단 기록을 가볍게 선별할 수 있는 다중 입력 필터 모듈을 설계하고, UI 조작 단계에서 복잡함을 덜기 위해 Vue의 내장 Transition 모션 효과를 얹어 부드러운 토글 및 모달 레이아웃을 직접 퍼블리싱했습니다.
+### 3. SFC(.vue) 파일에서 HTML과 TS를 물리적으로 분리하는 아키텍처 도입
+
+- 템플릿과 비즈니스 로직의 극대화된 격리를 추구하기 위해 싱글 파일 컴포넌트(`SFC`) 내부 구조를 커스텀했습니다.
+- Webpack 환경 파일(`vue.config.js`)에 `vue-template-loader` 룰을 적용하여 HTML을 컴파일할 수 있도록 가공했습니다.
+- `shims-html.d.ts` 선언 파일을 생성하고, 컴포넌트 내부에서 `@WithRender` 데코레이터를 이용해 외부 html 파일을 직접 맵핑(`import WithRender from './App.html'`)하여 비즈니스 로직인 TypeScript 파일과 퍼블리싱용 마크업 구조를 완전히 물리 분리하여 코드 가독성과 형상 관리 이점을 높였습니다.
+
+### 4. JWT 인증 및 Axios 통신 레이어 통합
+
+- 어드민의 철저한 보안을 위해 JWT 토큰 기반 인증 시스템(`jwtService.ts`)을 이식하고, API 예외 처리 및 토큰 만료 갱신 처리를 자동화하는 Axios 기반의 전용 커스텀 HTTP 통신 모듈(`src/restApi/`)을 구축했습니다.

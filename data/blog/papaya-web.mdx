@@ -1,35 +1,55 @@
 ---
 title: 'Papaya Web'
-date: '2023-03-15'
-tags: ['papaya', 'vue', 'typescript', 'vuetify', 'backoffice']
+date: '2024-08-23'
+tags: ['vue', 'typescript', 'vuetify', 'backoffice']
 draft: false
 summary: 'TypeScript와 Vuetify, Vee-Validate 프레임워크 스택을 밀도 있게 설계하여 제작된 Vue2 기반의 고성능 웹 시스템 인터페이스 프로젝트입니다.'
+repositoryUrl: https://github.com/seokgenius/papaya
 ---
 
-# Papaya Web (파파야 웹 개발)
+# Papaya Web (종합 클래스 관리 플랫폼 LMS 개발)
 
-TypeScript 기반의 강력한 타입 정의와 안정적인 폼 검증 모듈을 갖춰 정밀한 웹 관리를 보조하는 프론트엔드 프로젝트입니다.
+교육 기관, 스터디 모임, 온라인 클래스를 효율적으로 개설하고 운영 및 소통할 수 있도록 지원하는 **종합 클래스 관리 플랫폼(LMS)** 개발 프로젝트입니다. 정밀한 역할 분담 권한 시스템과 커뮤니케이션 도구를 갖춘 Vue.js 기반 웹 플랫폼입니다.
+
+---
 
 ## 🛠️ 기술 스택 (Spec)
 
-- **Framework**: Vue.js `2.6.11` (Vue Router `3.2.0`, Vue Class Component `7.2.3`, Vue Property Decorator `8.4.2`)
-- **State Management**: Vuex `3.4.0` (vuex-class `0.3.2`, vuex-module-decorators `1.0.1`)
-- **UI Library**: Vuetify `2.4.9`
+- **Framework**: Vue.js `2.6.11` (Vue Router `3.2.0`, Vue Class Component, Vue Property Decorator)
+- **State Management**: Vuex `3.4.0` (모듈화된 상태 관리 구현, `vuex-module-decorators` 적용)
+- **UI Framework & Styling**: Vuetify `2.4.9` (커스텀 SCSS 적용)
+- **HTTP Client**: Axios (`AxiosService.ts` 래핑 모듈 활용)
 - **Form Validation**: Vee-Validate `3.4.5`
 - **Language**: TypeScript `3.9.3`
-- **Styling**: SCSS
+- **Build & Quality Tool**: Babel, Webpack (Vue CLI), ESLint + TSLint
+- **Testing Spec**: Jest (Unit Test), Cypress (E2E Test)
+
+---
 
 ## 🚀 주요 역할 및 수행 내용
 
-### 1. 객체 지향형 Vue 클래스 컴포넌트 모델 수립
+### 1. 객체 지향형 Vue 클래스 컴포넌트 및 Vuex 모듈화 설계
 
-- `vue-class-component` 및 `vue-property-decorator` 데코레이터를 적극 수용하여, 가독성이 높고 상속이 용이한 객체지향 형태의 컴포넌트 코드베이스를 수립했습니다.
-- TypeScript의 엄격한 모드를 유지하며 상태 및 메서드에 명확한 인터페이스를 부여하여 잠재적 버그를 사전 배제했습니다.
+- `vue-class-component` 및 `vue-property-decorator` 데코레이터를 적용하여 클래스 기반 객체 지향 컴포넌트 구조를 확립했습니다.
+- 클래스 생성, 일정 관리, 커뮤니케이션 등의 방대한 상태를 효과적으로 통제하기 위해 `Vuex` 상태 저장소를 기능별 모듈로 나누어 아키텍처화했습니다.
 
-### 2. Vuetify 및 SCSS 스타일 연동 고도화
+### 2. 종합 LMS 비즈니스 서비스 레이어 구축
 
-- Vuetify의 기본 프레임에 맞춰 SCSS 변수 값을 유기적으로 재매핑하고, 복잡한 비즈니스 폼과 어드민 그리드를 신속하게 렌더링할 수 있는 UI 템플릿들을 다수 설계했습니다.
+- **체계적인 클래스 및 멤버 관리**: `MyClassService.ts`와 연동하여 참여 및 운영 중인 클래스를 모아보게 하고, 매니저/스태프/멤버로 분리되는 권한 제어 엔진을 개발했습니다.
+- **일정 및 스케줄링**: `ScheduleService.ts`를 활용하여 과제 마감, 수업 시간 등을 캘린더 및 타임라인 뷰로 시각화해 관리할 수 있도록 설계했습니다.
+- **원활한 커뮤니케이션**: 공지사항 및 FAQ(`NoticeService.ts`, `FaqService.ts`), 피드 및 댓글(`PostService.ts`, `CommentService.ts`)과 같은 커뮤니티 기능을 모듈식 서비스로 구현했습니다.
 
-### 3. Vee-Validate 기반 유효성 피드백
+### 3. 인증 가드 및 통합 검색 연동을 통한 보안과 편의성 확보
 
-- 여러 단계로 나뉘는 사용자 입력 폼에 대해 `Vee-Validate`의 사전 유효성 검증 시스템을 탑재하여 에러 피드백을 실시간 제공하고, 올바른 데이터 송신만을 허용하는 정밀 흐름 제어를 지원했습니다.
+- **네비게이션 가드 구현**: 미인증 유저의 불법적인 페이지 접근을 원천 차단하기 위해 Vue Router 내에 `AuthGuard.ts`를 구현하여 권한 및 라우트 보호 체계를 강화했습니다.
+- **통합 검색 엔진 연동**: 대규모 교육 자료와 멤버 목록, 게시글 등을 단일 검색 창에서 수월하게 조회할 수 있도록 `SearchApiService.ts` 기반 검색 API를 연동했습니다.
+
+### 4. 체계적인 화면 ID 네이밍 컨벤션 정립
+
+- 대규모 LMS 시스템의 페이지 관리 복잡도를 극복하기 위해 체계적인 화면 식별용 ID 가이드를 직접 수립했습니다.
+- 페이지 성격(`LP`: 랜딩, `SBP`: 서브, `MP`: 마이페이지 등)과 기능/타입 단위(`SC`: 검색, `SKD`: 스케줄러 등)를 구분하여 `LP.CLS.CD-LT.4.5.2`와 같은 표준 명명 방식을 도입함으로써 협업 생산성을 끌어올렸습니다.
+
+### 5. Jest 및 Cypress 기반 테스트 자동화 파이프라인 구축
+
+- **단위 테스트 (Unit Test)**: 핵심 유틸리티 함수 및 API 통신 모듈의 정확성을 담보하기 위해 **Jest** 단위 테스트 환경을 조성하고 관리했습니다.
+- **E2E 테스트 (End-to-End)**: 가상 유저 시나리오에 따른 결제, 회원가입, 클래스 생성 등 핵심 비즈니스 흐름을 **Cypress**로 코딩하여 무결성의 사용자 경험을 확보했습니다.

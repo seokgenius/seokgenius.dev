@@ -1,37 +1,53 @@
 ---
 title: 'SLW - Graphit'
-date: '2024-03-05'
-tags: ['slw', 'nextjs', 'typescript', 'tailwind']
+date: '2026-06-11'
+tags: ['nextjs', 'typescript', 'tailwind']
 draft: false
 summary: 'Next.js 15, React 19, Zustand, Tailwind CSS 및 Shadcn/ui 스택을 사용하여 구축된 신규 웹 어플리케이션 개발 프로젝트입니다.'
+repositoryUrl: 'https://github.com/seokgenius/slw-graphit-front'
 ---
 
-# SLW - Graphit
+# SLW - Graphit (AI 기반 리터러시 분석 및 지식 트리 시각화 플랫폼)
 
-완전한 모던 스택(Next.js 15, React 19)을 탑재하여 최상급의 렌더링 성능과 모듈러 아키텍처를 실현한 고해상도 그래픽 & 대시보드 성격의 프론트엔드 프로젝트입니다.
+AI를 기반으로 사용자의 리터러시(문해력)를 분석하고, 전공 및 진로 탐색을 돕는 맞춤형 교육/탐색 플랫폼 **Graphit** 개발 프로젝트입니다. 복잡한 지식과 관심사 구조를 시각적인 트리(Tree) 형태로 구조화하여 직관적인 학습 경로 설계를 지원하는 Next.js 기반 모던 웹 어플리케이션입니다.
+
+---
 
 ## 🛠️ 기술 스택 (Spec)
 
-- **Node.js**: `22.16.0`
-- **Framework**: Next.js `15` + React `19`
-- **State Management**: Zustand
-- **Styling**: Tailwind CSS + Shadcn/ui + SCSS
-- **Deployment**: Vercel (자동 배포 파이프라인 구성)
-- **Linter/Formatter**: ESLint (Airbnb 규칙 준수) + Prettier + Husky (Git GitHooks)
+- **Framework**: Next.js `15` (App Router) + React `19`
+- **Language**: TypeScript
+- **State Management & Data Fetching**: Zustand, React Query
+- **Styling**: Tailwind CSS (PostCSS) + Shadcn UI + SCSS
+- **Typography**: Pretendard
+- **CI/CD**: Vercel, Bitbucket Pipelines
+- **Code Quality**: ESLint (Airbnb) + Prettier + Husky (commit-msg, pre-commit)
 - **배포 웹사이트**: [slw-graphit-front.vercel.app](https://slw-graphit-front.vercel.app/)
+
+---
 
 ## 🚀 주요 역할 및 수행 내용
 
-### 1. 최첨단 Next.js 15 및 React 19 아키텍처 수립
+### 1. 지식 트리(Knowledge Tree) 시각화 엔진 구축
 
-- Next.js 15의 최신 App Router 및 React Server Component(RSC) 아키텍처 규칙을 도입하여 첫 로딩 바이트 크기와 웹 성능 핵심 지표(LCP, CLS 등)를 대폭 개선하였습니다.
+- **전공 트리 (Majors Tree)**: 방대한 분량의 학문 분야와 직무 도메인 지식을 시각적 위계(Tree) 구조로 화면에 시각화하여 사용자가 흥미 분야를 타고 내려가며 탐색할 수 있도록 구현했습니다.
+- **북마크 트리 (Bookmarks Tree)**: 개별 사용자가 스크랩 및 북마크한 분야들을 모아 본인만의 개인화된 지식 맵을 커스텀 트리를 통해 스스로 구조화하고 파악할 수 있도록 설계했습니다.
 
-### 2. 컴포넌트 표준 정립 및 디자인 시스템 바인딩
+### 2. AI 기반 문해력(Literacy) 분석 및 심층 리포트 구현
 
-- **Shadcn/ui & Tailwind CSS**를 유기적으로 확장하여 재사용 가능한 컴포넌트 세트를 만들고, 다채롭고 직관적인 UI 구성을 보장하였습니다.
-- 상태 라이브러리인 **Zustand**로 전역 렌더 상태를 통제하여 프론트 성능 낭비를 막고 데이터 일관성을 지켰습니다.
+- **AI 분석 파이프라인**: `api/analyze/route.ts` 분석 API와 연동하여 텍스트 데이터에 대한 사용자의 문해력을 평가하고 맞춤 진단 결과를 생성하는 로직을 개발했습니다.
+- **프롬프트 튜닝**: `src/lib/prompt.ts` 파일 내에 세부적인 AI 분석용 프롬프트를 정의 및 고도화하여 정합성 높은 개인 맞춤 전공 및 진로 추천 리포트를 실시간으로 피드백하도록 구현했습니다.
 
-### 3. Vercel CI/CD 완전 배포 파이프라인 개발
+### 3. 모바일 최적화 UI/UX 및 하이브리드 앱 수준 사용성 강화
 
-- Bitbucket 코드를 자동으로 GitHub에 동기화하고 연동하여, 커밋 푸시 시 실시간으로 프로덕션 빌드 유효성을 검사하고 Vercel에 안전하게 패치 및 무중단 배포를 이어가는 파이프라인을 커스텀 구축했습니다.
-- Git Hook(Husky)을 연동하여 커밋 시 포맷 체크(ESLint, Prettier)가 엄격하게 진행되도록 조치했습니다.
+- **모바일 네이티브 경험**: 모바일 웹 뷰포트에서 앱처럼 매끄러운 사용성을 주기 위해 **Bottom Sheet**, 하단 **탭 바(Tab Bar)**, **무한 스크롤(Infinite Scroll)** 컴포넌트를 직접 튜닝 및 탑재했습니다.
+- **컴포넌트 설계 표준화**: `shared` (전체 도메인 공통), `features` (전공, 분석 등 도메인별), `ui` (shadcn/ui 기반 원자 컴포넌트)로 컴포넌트를 완벽히 격리하여 재사용성과 빌드 최적화를 달성했습니다.
+
+### 4. Zustand 및 React Query를 활용한 안정적인 데이터 동기화
+
+- 전역 화면 상태(모바일 Bottom Sheet 여닫힘, 활성 탭 등)는 **Zustand** 스토어로 경량 제어하고, 실시간 분석 결과와 북마크 저장 상태 등 비동기 서버 데이터는 **React Query**를 통해 적시에 동기화 및 캐싱했습니다.
+
+### 5. 엄격한 품질 제어 및 배포 인프라 운영
+
+- **엄격한 Git Hooks 연동**: Husky를 구축하여 커밋 시 메시지 규칙(`commit-msg`) 및 포맷터 검사(`pre-commit`)를 강제 적용했습니다.
+- **Bitbucket Pipelines 연동**: 소스 코드의 패키징 오류와 린팅 검사를 CI/CD 파이프라인에서 자동 수행하여 배포 안정성을 유지했습니다.
