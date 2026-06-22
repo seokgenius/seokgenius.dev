@@ -1,0 +1,43 @@
+---
+description: seokgenius.dev 프로젝트 코딩 컨벤션 (상세는 AGENTS.md 참고)
+alwaysApply: true
+---
+
+# Project Conventions
+
+전체 규칙은 루트 `AGENTS.md`를 따릅니다. 핵심만 요약합니다.
+
+## Stack
+
+Next.js 15 App Router · React 19 · TypeScript · Tailwind CSS v4 · Contentlayer2 · Pliny · Yarn 3
+
+## Formatting
+
+- Prettier: no semicolons, single quotes, printWidth 100, Tailwind class sorting
+- LF line endings, Husky lint-staged on commit
+
+## Imports
+
+`@/components/*`, `@/data/*`, `@/layouts/*`, `contentlayer/generated`, `pliny/*`
+
+## React
+
+- Server Components 기본; `'use client'`는 hooks/이벤트 필요 시만
+- 내부 링크: `@/components/Link` (외부는 noopener 자동)
+- 이미지: `@/components/Image` (`BASE_PATH` 지원)
+- 신규 컴포넌트: `function` + default export, Props `interface`
+
+## Styling
+
+- `primary-*` accent, `gray-*` text, `dark:` variant 필수
+- 콘텐츠: `prose dark:prose-invert max-w-none`
+- 레이아웃: `SectionContainer`, `divide-y divide-gray-200 dark:divide-gray-700`
+
+## Content
+
+- MDX: `data/blog/`, `data/authors/` — frontmatter + 한국어 본문
+- 설정: `data/siteMetadata.js`, nav/projects는 `data/*.ts`
+
+## Scope
+
+요청 범위만 수정. 주변 파일과 동일한 패턴 유지. 불필요한 리팩터링 금지.
