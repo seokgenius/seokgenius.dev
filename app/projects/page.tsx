@@ -1,8 +1,9 @@
-import projectsData from '@/data/projectsData'
 import Card from '@/components/Card'
+import projectsData from '@/data/projectsData'
 import { genPageMetadata } from 'app/seo'
+import type { Metadata } from 'next'
 
-export const metadata = genPageMetadata({ title: 'Projects' })
+export const metadata: Metadata = genPageMetadata({ title: 'Projects' })
 
 export default function Projects() {
   return (
@@ -13,7 +14,7 @@ export default function Projects() {
             Projects
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            Showcase your projects with a hero image (16 x 9)
+            실무 프로젝트 포트폴리오
           </p>
         </div>
         <div className="container py-12">

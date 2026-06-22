@@ -41,7 +41,7 @@ const projectsData: Project[] = [
   {
     title: 'Java-metacommerce',
     description: `Vite, Vue 3, TypeScript 기반의 글로벌 E-commerce 솔루션 및 주문/셀러 관리 백오피스 구축. SSR/CSR 하이브리드 설계 및 Eximbay 해외 결제, vue-i18n 다국어 연동을 주도했습니다.`,
-    imgSrc: '/static/images/java-metacommerce.webp',
+    imgSrc: '/static/images/java-metacommerce.png',
     href: '/blog/java-metacommerce',
   },
   {
