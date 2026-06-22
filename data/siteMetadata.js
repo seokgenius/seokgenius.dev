@@ -6,7 +6,7 @@ const siteMetadata = {
   description: 'A blog created with Next.js and Tailwind.css',
   language: 'ko-kr',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
+  siteUrl: 'https://seokgenius-dev.vercel.app',
   siteRepo: 'https://github.com/seokgenius/seokgenius.dev',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
@@ -76,7 +76,7 @@ const siteMetadata = {
       // example: https://giscus.app/themes/custom_example.css
       themeURL: '',
       // This corresponds to the `data-lang="en"` in giscus's configurations
-      lang: 'en',
+      lang: 'ko',
     },
   },
   search: {
