@@ -9,13 +9,13 @@ const projectsData: Project[] = [
   {
     title: 'Golfzon - Campaign tool',
     description: `골프존의 메시지 및 푸시 통합 발송 내부 백오피스 캠페인 도구 개발 프로젝트. Vite, Vue 3, Pinia, Element Plus 등을 적용하여 대대적인 번들 성능 단축 및 UI 편의성 고도화를 수행했습니다.`,
-    imgSrc: '/static/images/golfzon-campaign-tool.png',
+    imgSrc: '/static/images/projects/golfzon-campaign-tool.png',
     href: '/blog/golfzon-campaign-tool',
   },
   {
     title: 'Golfzon - GSTAT',
     description: `골프존 통계 시스템 리팩토링 프로젝트. 기존 레거시 vue-cli 및 admin-lte 스택을 Vue 3 + Vite + Pinia + PrimeVue 조합으로 전면 개선하고, 컬럼 드래그 앤 드롭 및 스프레드시트 입력을 구현했습니다.`,
-    imgSrc: '/static/images/golfzon-gstat.png',
+    imgSrc: '/static/images/projects/golfzon-gstat.png',
     href: '/blog/golfzon-gstat',
   },
   {
@@ -41,19 +41,19 @@ const projectsData: Project[] = [
   {
     title: 'Java-metacommerce',
     description: `Vite, Vue 3, TypeScript 기반의 글로벌 E-commerce 솔루션 및 주문/셀러 관리 백오피스 구축. SSR/CSR 하이브리드 설계 및 Eximbay 해외 결제, vue-i18n 다국어 연동을 주도했습니다.`,
-    imgSrc: '/static/images/java-metacommerce.png',
+    imgSrc: '/static/images/projects/java-metacommerce.png',
     href: '/blog/java-metacommerce',
   },
   {
     title: 'Kiwoom heroes Admin',
     description: `키움히어로즈 공식 앱 어드민. 동적 컴포넌트(<component :is="...">) 레이아웃 구조화 및 Route Meta 네비게이션 가드를 이용한 메뉴 권한 관리, 데이터 다차원 필터 및 슬라이드 UI 모션을 설계했습니다.`,
-    imgSrc: '/static/images/kiwoom-heroes-admin.png',
+    imgSrc: '/static/images/projects/kiwoom-heroes-admin.png',
     href: '/blog/kiwoom-heroes-admin',
   },
   {
     title: 'Papaya Web',
     description: `TypeScript, Vuetify, Vee-Validate 조합의 Vue2 어드민 프로젝트. 객체지향적 Class Component 아키텍처 및 강력한 타입 바인딩, 비즈니스 입력 폼의 세밀한 유효성 피드백 로직을 전개했습니다.`,
-    imgSrc: '/static/images/papaya-web.png',
+    imgSrc: '/static/images/projects/papaya-web.png',
     href: '/blog/papaya-web',
   },
   {

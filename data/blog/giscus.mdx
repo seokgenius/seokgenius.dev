@@ -1,0 +1,192 @@
+---
+title: 'Giscus를 활용한 댓글 기능 구현'
+date: '2026-06-22'
+tags: ['nextjs', 'giscus', 'github', 'pliny']
+draft: false
+summary: 'GitHub Discussions 기반 Giscus 댓글을 Next.js 블로그(Pliny)에 연동하는 방법과 카테고리 설정 문제 해결 가이드입니다.'
+---
+
+# Giscus란?
+
+[Giscus](https://giscus.app/ko)는 **GitHub Discussions**를 댓글 시스템으로 사용하는 오픈소스 위젯입니다. 별도 데이터베이스 없이 GitHub 계정으로 댓글과 이모지 반응을 남길 수 있으며, 이 블로그(seokgenius.dev)는 **Pliny** + `@/components/Comments` 조합으로 이미 연동 코드가 준비되어 있습니다. 따라서 새로 위젯을 작성하기보다 **GitHub 설정과 환경 변수만 채우면** 댓글이 동작합니다.
+
+## Giscus 작동 원리
+
+giscus가 로드되면 GitHub Discussions 검색 API로 현재 페이지와 연결된 Discussion을 찾습니다. `pathname` 매핑을 쓰면 URL 경로(예: `/blog/giscus/`)를 기준으로 Discussion을 매칭하고, 일치하는 Discussion이 없으면 **첫 댓글 작성 시** giscus 봇이 자동으로 새 Discussion을 생성합니다.
+
+## 사전 준비 (GitHub)
+
+### 1. Discussions 활성화
+
+블로그 저장소(예: `seokgenius/seokgenius.dev`)에서 다음 순서로 설정합니다.
+
+1. **Settings → General → Features**
+2. **Discussions** 체크
+
+![Discussions](/static/images/giscus/giscus-1.png)
+
+Discussions가 꺼져 있으면 giscus.app에서 카테고리 목록이 **전혀** 표시되지 않습니다.
+
+### 2. Giscus GitHub App 설치
+
+1. [https://github.com/apps/giscus](https://github.com/apps/giscus) 접속
+2. **Install** 또는 **Configure** 클릭
+3. 댓글에 사용할 저장소 선택 후 설치
+
+![Configure](/static/images/giscus/giscus-2.png)
+
+### 3. Discussion 카테고리 만들기
+
+저장소 → **Discussions** 탭 → 왼쪽 **Categories** 옆 **연필(✏️)** → **New category**
+
+| 이름 예시       | 형식                  | 용도                                      |
+| --------------- | --------------------- | ----------------------------------------- |
+| `Blog Comments` | Open-ended discussion | 일반 댓글용                               |
+| `Announcements` | Announcements         | giscus 권장 (봇·관리자만 Discussion 생성) |
+
+![Categories](/static/images/giscus/giscus-3.png)
+
+## giscus.app 설정
+
+[https://giscus.app/ko](https://giscus.app/ko) 페이지 **아래로 스크롤**하면 설정 섹션이 나타납니다. 상단 소개만 보면 카테고리 선택 UI를 찾기 어렵습니다.
+
+### 설정 섹션 순서
+
+1. **언어** — `한국어` 선택
+2. **저장소** — `owner/repo` 형식 입력 (예: `seokgenius/seokgenius.dev`)
+3. **페이지 ↔ Discussions 연결** — `pathname` 선택 (프로젝트 `mapping`과 동일)
+4. **Discussion 카테고리** ← **카테고리 선택 드롭다운**
+5. 기능 / 테마 / `<script>` 코드
+
+![설정](/static/images/giscus/giscus-4.png)
+
+### 저장소 입력 후 확인
+
+저장소 입력란 옆에 **초록색 체크(✓)** 가 표시되어야 합니다. 체크가 없으면 **Discussion 카테고리**가 비어 있거나「카테고리가 없습니다」만 보입니다.
+
+### 카테고리가 안 보일 때
+
+| 증상                    | 원인                                | 해결                                                  |
+| ----------------------- | ----------------------------------- | ----------------------------------------------------- |
+| 카테고리 섹션을 못 찾음 | 페이지를 충분히 스크롤하지 않음     | 설정 영역까지 아래로 스크롤                           |
+| 「카테고리가 없습니다」 | Discussions 미활성 또는 저장소 오류 | GitHub에서 Discussions 켜기, `owner/repo` 형식 재확인 |
+| 드롭다운이 비어 있음    | 카테고리 미생성                     | GitHub Discussions에서 카테고리 추가 후 새로고침      |
+| 연결 실패               | 비공개 저장소                       | Giscus는 **공개** 저장소 필요                         |
+
+카테고리를 선택하면 페이지 하단 `<script>` 태그에 `data-repo-id`, `data-category`, `data-category-id` 값이 자동으로 채워집니다.
+
+```html
+<script
+  src="https://giscus.app/client.js"
+  data-repo="seokgenius/seokgenius.dev"
+  data-repo-id="YOUR-DATA-REPO-ID"
+  data-category="Blog Comments"
+  data-category-id="YOUR-DATA-CATEGORY-ID"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="ko"
+  crossorigin="anonymous"
+  async
+></script>
+```
+
+## 프로젝트 설정
+
+### 환경 변수 (`.env.local`)
+
+```env
+NEXT_PUBLIC_GISCUS_REPO=seokgenius/seokgenius.dev
+NEXT_PUBLIC_GISCUS_REPOSITORY_ID=YOUR-DATA-REPO-ID
+NEXT_PUBLIC_GISCUS_CATEGORY=Blog Comments
+NEXT_PUBLIC_GISCUS_CATEGORY_ID=YOUR-DATA-CATEGORY-ID
+```
+
+배포할 때는 동일한 변수를 **Environment Variables**에도 등록해야 합니다.
+Vercel 의 경우 **Settings → Environments → Environment Variables** 에서 등록할 수 있습니다.
+
+`NEXT_PUBLIC_` 접두사가 붙은 값은 클라이언트에서 사용됩니다.
+
+![Vercel](/static/images/giscus/giscus-5.png)
+
+### siteMetadata.js
+
+`data/siteMetadata.js`의 `comments` 블록에서 provider와 giscusConfig를 읽습니다.
+
+```javascript
+comments: {
+  provider: 'giscus',
+  giscusConfig: {
+    repo: process.env.NEXT_PUBLIC_GISCUS_REPO,
+    repositoryId: process.env.NEXT_PUBLIC_GISCUS_REPOSITORY_ID,
+    category: process.env.NEXT_PUBLIC_GISCUS_CATEGORY,
+    categoryId: process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID,
+    mapping: 'pathname',
+    reactions: '1',
+    metadata: '0',
+    theme: 'light',
+    darkTheme: 'transparent_dark',
+    lang: 'ko',
+  },
+},
+```
+
+- `mapping: 'pathname'` — giscus.app의 **Discussion 제목이 페이지 경로를 포함** 옵션과 동일
+- `lang: 'ko'` — Giscus UI 한국어
+- `siteUrl`도 실제 배포 도메인(예: `https://seokgenius.dev`)으로 맞추는 것을 권장
+
+### Content Security Policy
+
+`next.config.js`에 Giscus 도메인이 이미 허용되어 있습니다.
+
+```javascript
+script-src ... giscus.app ...
+frame-src giscus.app
+```
+
+외부 스크립트를 추가할 때는 CSP에 도메인을 함께 등록해야 합니다.
+
+### Comments 컴포넌트
+
+`components/Comments.tsx`는 Pliny의 `Comments` 컴포넌트를 래핑합니다. `siteMetadata.comments.provider`가 없으면 렌더링하지 않습니다.
+
+댓글은 `PostLayout`, `PostSimple`, `PostBanner` 레이아웃 포스트 하단 `#comment` 섹션에 표시됩니다.
+
+## 동작 확인
+
+```bash
+yarn dev
+```
+
+1. 블로그 포스트 페이지 접속 (예: `/blog/giscus/`)
+2. 하단에 Giscus 위젯이 표시되는지 확인
+3. GitHub 로그인 후 댓글 작성
+4. GitHub 저장소 **Discussions** 탭에 해당 페이지용 Discussion이 생성되었는지 확인
+
+## 커스터마이징
+
+| 목적                  | 방법                                                      |
+| --------------------- | --------------------------------------------------------- |
+| 댓글 비활성화         | `comments.provider` 제거 또는 빈 값                       |
+| 다크 모드 테마        | `darkTheme: 'transparent_dark'` 등 giscus.app 테마와 맞춤 |
+| GitHub Pages 서브경로 | `BASE_PATH` 설정 + giscus.app URL/mapping 재확인          |
+| 지연 로딩             | `Comments.tsx`에서 클릭 후 로드 패턴 적용 (성능 최적화용) |
+
+## 체크리스트
+
+- [ ] GitHub Discussions 활성화
+- [ ] Giscus GitHub App 설치
+- [ ] Discussion 카테고리 생성
+- [ ] giscus.app에서 저장소 연결(✓) 및 카테고리 선택
+- [ ] `.env.local` 및 배포 환경 변수 설정
+- [ ] `siteUrl` 실제 도메인으로 수정
+- [ ] 포스트 페이지에서 댓글 동작 확인
+
+## 참고
+
+- [Giscus 공식 사이트](https://giscus.app/ko)
+- [Giscus GitHub App](https://github.com/apps/giscus)
+- [tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog)

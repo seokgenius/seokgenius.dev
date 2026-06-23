@@ -3,7 +3,7 @@ const siteMetadata = {
   title: 'seokgenius.dev',
   author: 'seokgenius',
   headerTitle: 'seokgenius.dev',
-  description: 'A blog created with Next.js and Tailwind.css',
+  description: "front-end developer seokgenius's portfolio and blog",
   language: 'ko-kr',
   theme: 'system', // system, dark or light
   siteUrl: 'https://seokgenius-dev.vercel.app',
