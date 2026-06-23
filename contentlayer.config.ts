@@ -60,18 +60,18 @@ const computedFields: ComputedFields = {
 }
 
 const contentFields = {
-  title: { type: 'string', required: true },
-  date: { type: 'date', required: true },
-  tags: { type: 'list', of: { type: 'string' }, default: [] },
-  lastmod: { type: 'date' },
-  draft: { type: 'boolean' },
-  summary: { type: 'string' },
-  images: { type: 'json' },
-  authors: { type: 'list', of: { type: 'string' } },
-  layout: { type: 'string' },
-  bibliography: { type: 'string' },
-  canonicalUrl: { type: 'string' },
-  repositoryUrl: { type: 'string' },
+  title: { type: 'string' as const, required: true },
+  date: { type: 'date' as const, required: true },
+  tags: { type: 'list' as const, of: { type: 'string' as const }, default: [] },
+  lastmod: { type: 'date' as const },
+  draft: { type: 'boolean' as const },
+  summary: { type: 'string' as const },
+  images: { type: 'json' as const },
+  authors: { type: 'list' as const, of: { type: 'string' as const } },
+  layout: { type: 'string' as const },
+  bibliography: { type: 'string' as const },
+  canonicalUrl: { type: 'string' as const },
+  repositoryUrl: { type: 'string' as const },
 }
 
 function createStructuredData(doc) {
