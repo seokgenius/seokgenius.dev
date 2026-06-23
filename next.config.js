@@ -95,6 +95,28 @@ module.exports = () => {
         },
       ]
     },
+    async redirects() {
+      return [
+        { source: '/blog', destination: '/posts', permanent: true },
+        { source: '/blog/', destination: '/posts/', permanent: true },
+        { source: '/blog/page/:page', destination: '/posts/page/:page', permanent: true },
+        { source: '/blog/page/:page/', destination: '/posts/page/:page/', permanent: true },
+        { source: '/blog/giscus', destination: '/posts/giscus', permanent: true },
+        { source: '/blog/giscus/', destination: '/posts/giscus/', permanent: true },
+        {
+          source: '/blog/vite8-migration',
+          destination: '/posts/vite8-migration',
+          permanent: true,
+        },
+        {
+          source: '/blog/vite8-migration/',
+          destination: '/posts/vite8-migration/',
+          permanent: true,
+        },
+        { source: '/blog/:slug', destination: '/projects/:slug', permanent: true },
+        { source: '/blog/:slug/', destination: '/projects/:slug/', permanent: true },
+      ]
+    },
     webpack: (config, options) => {
       config.module.rules.push({
         test: /\.svg$/,

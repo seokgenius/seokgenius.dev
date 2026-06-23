@@ -12,7 +12,7 @@ summary: 'GitHub Discussions 기반 Giscus 댓글을 Next.js 블로그(Pliny)에
 
 ## Giscus 작동 원리
 
-giscus가 로드되면 GitHub Discussions 검색 API로 현재 페이지와 연결된 Discussion을 찾습니다. `pathname` 매핑을 쓰면 URL 경로(예: `/blog/giscus/`)를 기준으로 Discussion을 매칭하고, 일치하는 Discussion이 없으면 **첫 댓글 작성 시** giscus 봇이 자동으로 새 Discussion을 생성합니다.
+giscus가 로드되면 GitHub Discussions 검색 API로 현재 페이지와 연결된 Discussion을 찾습니다. `pathname` 매핑을 쓰면 URL 경로(예: `/posts/giscus/`)를 기준으로 Discussion을 매칭하고, 일치하는 Discussion이 없으면 **첫 댓글 작성 시** giscus 봇이 자동으로 새 Discussion을 생성합니다.
 
 ## 사전 준비 (GitHub)
 
@@ -161,7 +161,7 @@ frame-src giscus.app
 yarn dev
 ```
 
-1. 블로그 포스트 페이지 접속 (예: `/blog/giscus/`)
+1. 블로그 포스트 페이지 접속 (예: `/posts/giscus/`)
 2. 하단에 Giscus 위젯이 표시되는지 확인
 3. GitHub 로그인 후 댓글 작성
 4. GitHub 저장소 **Discussions** 탭에 해당 페이지용 Discussion이 생성되었는지 확인

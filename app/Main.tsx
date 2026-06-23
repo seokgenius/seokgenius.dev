@@ -1,9 +1,9 @@
 import Image from '@/components/Image'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
-import type { Authors, Blog } from 'contentlayer/generated'
+import type { Authors, Post } from 'contentlayer/generated'
 import { CoreContent } from 'pliny/utils/contentlayer'
 
-export default function Home({ author, posts }: { author: Authors; posts?: CoreContent<Blog>[] }) {
+export default function Home({ author, posts }: { author: Authors; posts?: CoreContent<Post>[] }) {
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">

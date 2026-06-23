@@ -35,7 +35,7 @@ Next.js 15 App Router · React 19 · TypeScript · Tailwind CSS v4 · Contentlay
 
 ## Content
 
-- MDX: `data/blog/`, `data/authors/` — frontmatter + 한국어 본문
+- MDX: `data/posts/`, `data/projects/`, `data/authors/` — frontmatter + 한국어 본문
 - 설정: `data/siteMetadata.js`, nav/projects는 `data/*.ts`
 
 ## Scope

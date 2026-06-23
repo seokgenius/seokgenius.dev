@@ -1,20 +1,11 @@
 {
-  "vue": 7,
-  "typescript": 6,
-  "backoffice": 5,
-  "nextjs": 2,
-  "tailwind": 2,
-  "javascript": 3,
-  "refactoring": 1,
-  "mobile": 3,
-  "animation": 2,
+  "nextjs": 1,
+  "giscus": 1,
+  "github": 1,
+  "pliny": 1,
+  "vue": 1,
+  "typescript": 1,
   "vite": 1,
-  "ecommerce": 1,
-  "scss": 2,
-  "vuetify": 1,
-  "publishing": 3,
-  "jquery": 3,
-  "gsap": 1,
-  "html5": 1,
-  "kiosk": 1
+  "rolldown": 1,
+  "migration": 1
 }
