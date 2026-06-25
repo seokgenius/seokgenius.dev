@@ -75,15 +75,28 @@ const contentFields = {
 }
 
 function createStructuredData(doc) {
+  const isPost = doc._raw.flattenedPath.startsWith('posts/')
+  const pageUrl = `${siteMetadata.siteUrl.replace(/\/$/, '')}/${doc._raw.flattenedPath}/`
+
   return {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
+    '@type': isPost ? 'BlogPosting' : 'Article',
     headline: doc.title,
     datePublished: doc.date,
     dateModified: doc.lastmod || doc.date,
     description: doc.summary,
     image: doc.images ? doc.images[0] : siteMetadata.socialBanner,
-    url: `${siteMetadata.siteUrl}/${doc._raw.flattenedPath}`,
+    url: pageUrl,
+    inLanguage: siteMetadata.locale,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': pageUrl,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: siteMetadata.title,
+      url: siteMetadata.siteUrl,
+    },
   }
 }
 

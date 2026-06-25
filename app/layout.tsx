@@ -11,6 +11,9 @@ import Footer from '@/components/Footer'
 import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
+import JsonLd from '@/components/JsonLd'
+import { createWebsiteJsonLd } from '@/lib/jsonLd'
+import { ogLocale } from '@/lib/siteUrl'
 
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -31,7 +34,7 @@ export const metadata: Metadata = {
     url: './',
     siteName: siteMetadata.title,
     images: [siteMetadata.socialBanner],
-    locale: 'en_US',
+    locale: ogLocale(),
     type: 'website',
   },
   alternates: {
@@ -60,6 +63,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const basePath = process.env.BASE_PATH || ''
+  const websiteJsonLd = createWebsiteJsonLd()
 
   return (
     <html
@@ -95,6 +99,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
       <body className="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white">
+        <JsonLd data={websiteJsonLd} />
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SectionContainer>

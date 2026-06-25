@@ -3,7 +3,10 @@ import projectsData from '@/data/projectsData'
 import { genPageMetadata } from 'app/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = genPageMetadata({ title: 'Projects' })
+export const metadata: Metadata = genPageMetadata({
+  title: 'Projects',
+  description: '골프존, e-commerce, AI 플랫폼 등 실무 프론트엔드 프로젝트 포트폴리오',
+})
 
 export default function Projects() {
   return (

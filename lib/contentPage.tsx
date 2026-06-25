@@ -12,6 +12,9 @@ import PostBanner from '@/layouts/PostBanner'
 import siteMetadata from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
+import JsonLd from '@/components/JsonLd'
+import { createBreadcrumbJsonLd } from '@/lib/jsonLd'
+import { absoluteSiteUrl, ogLocale } from '@/lib/siteUrl'
 
 const defaultLayout = 'PostLayout'
 const layouts = {
@@ -49,18 +52,23 @@ export async function generateContentMetadata(
     }
   })
 
+  const canonicalUrl = content.canonicalUrl || absoluteSiteUrl(content.path)
+
   return {
     title: content.title,
     description: content.summary,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: content.title,
       description: content.summary,
       siteName: siteMetadata.title,
-      locale: 'en_US',
+      locale: ogLocale(),
       type: 'article',
       publishedTime: publishedAt,
       modifiedTime: modifiedAt,
-      url: './',
+      url: canonicalUrl,
       images: ogImages,
       authors: authors.length > 0 ? authors : [siteMetadata.author],
     },
@@ -100,15 +108,13 @@ export async function ContentPage({ slug, documents }: { slug: string; documents
       name: author.name,
     }
   })
+  const breadcrumbJsonLd = createBreadcrumbJsonLd(content)
 
   const Layout = layouts[content.layout || defaultLayout]
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={[jsonLd, breadcrumbJsonLd]} />
       <Layout content={mainContent} authorDetails={authorDetails} next={next} prev={prev}>
         <MDXLayoutRenderer code={content.body.code} components={components} toc={content.toc} />
       </Layout>
