@@ -7,7 +7,7 @@ const siteMetadata = {
     'Next.js·React 프론트엔드 개발자 seokgenius의 기술 블로그 — 웹 개발, 마이그레이션, 도구 연동 가이드',
   language: 'ko',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://seokgenius.dev',
+  siteUrl: 'https://seokgenius-dev.vercel.app',
   siteRepo: 'https://github.com/seokgenius/seokgenius.dev',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,

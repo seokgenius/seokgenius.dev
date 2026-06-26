@@ -2,18 +2,18 @@ import 'css/tailwind.css'
 import 'pliny/search/algolia.css'
 import 'remark-github-blockquote-alert/alert.css'
 
-import { Space_Grotesk } from 'next/font/google'
-import { Analytics, AnalyticsConfig } from 'pliny/analytics'
-import { SearchProvider, SearchConfig } from 'pliny/search'
-import Header from '@/components/Header'
-import SectionContainer from '@/components/SectionContainer'
 import Footer from '@/components/Footer'
-import siteMetadata from '@/data/siteMetadata'
-import { ThemeProviders } from './theme-providers'
-import { Metadata } from 'next'
+import Header from '@/components/Header'
 import JsonLd from '@/components/JsonLd'
+import SectionContainer from '@/components/SectionContainer'
+import siteMetadata from '@/data/siteMetadata'
 import { createWebsiteJsonLd } from '@/lib/jsonLd'
 import { ogLocale } from '@/lib/siteUrl'
+import { Metadata } from 'next'
+import { Space_Grotesk } from 'next/font/google'
+import { Analytics, AnalyticsConfig } from 'pliny/analytics'
+import { SearchConfig, SearchProvider } from 'pliny/search'
+import { ThemeProviders } from './theme-providers'
 
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -58,6 +58,10 @@ export const metadata: Metadata = {
     title: siteMetadata.title,
     card: 'summary_large_image',
     images: [siteMetadata.socialBanner],
+  },
+  verification: {
+    // <meta name="google-site-verification" content="BF0RmyQYF3DesLY5Jlc1OkogH1t-qdTSyCRWBse9HU0" />
+    google: 'BF0RmyQYF3DesLY5Jlc1OkogH1t-qdTSyCRWBse9HU0',
   },
 }
 
