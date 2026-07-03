@@ -1,0 +1,149 @@
+---
+title: 'Google Search Console로 사이트 등록하기'
+date: '2026-07-03'
+tags: ['seo', 'google-search-console', 'nextjs']
+draft: false
+summary: 'Next.js 블로그를 Google Search Console에 등록하고 소유권 확인, 사이트맵 제출, 색인 요청까지 진행하는 과정을 정리했습니다.'
+---
+
+# Google Search Console이란?
+
+[Google Search Console](https://search.google.com/search-console)(이하 GSC)은 사이트가 **Google 검색에 어떻게 노출·색인되는지** 확인하고 관리할 수 있는 무료 도구입니다. 블로그를 만들어 배포했더라도 GSC에 등록하지 않으면 Google이 사이트를 발견하고 색인하기까지 오랜 시간이 걸릴 수 있습니다.
+
+이 글에서는 이 블로그(Next.js + App Router)를 GSC에 등록하면서 진행한 과정을 정리합니다.
+
+## 사전 준비
+
+등록 전에 아래 URL이 정상 동작하는지 확인합니다.
+
+| 항목       | URL                                             |
+| ---------- | ----------------------------------------------- |
+| 사이트     | `https://seokgenius-dev.vercel.app`             |
+| 사이트맵   | `https://seokgenius-dev.vercel.app/sitemap.xml` |
+| robots.txt | `https://seokgenius-dev.vercel.app/robots.txt`  |
+
+이 블로그는 Next.js의 [Metadata Routes](https://nextjs.org/docs/app/api-reference/file-conventions/metadata) 규약을 사용해 빌드 시 `sitemap.xml`과 `robots.txt`를 자동 생성합니다.
+
+```typescript
+// app/sitemap.ts
+export default function sitemap(): MetadataRoute.Sitemap {
+  const contentRoutes = [...allPosts, ...allProjects]
+    .filter((content) => !content.draft)
+    .map((content) => ({
+      url: absoluteSiteUrl(content.path),
+      lastModified: content.lastmod || content.date,
+    }))
+
+  const routes = ['', 'posts', 'projects', 'tags'].map((route) => ({
+    url: absoluteSiteUrl(route),
+    lastModified: new Date().toISOString().split('T')[0],
+  }))
+
+  return [...routes, ...contentRoutes]
+}
+```
+
+`draft: true`인 포스트는 사이트맵에서 제외되므로 검색에도 노출되지 않습니다.
+
+## 1. 속성 추가
+
+[Google Search Console](https://search.google.com/search-console)에 접속해 로그인하면 속성 유형을 선택하는 화면이 나타납니다.
+
+![속성 유형 선택](/static/images/posts/google-search-console/gsc-1.png)
+
+| 유형           | 범위                                      | 소유권 확인 방법        |
+| -------------- | ----------------------------------------- | ----------------------- |
+| **도메인**     | 모든 하위 도메인 + `http`/`https` 전체    | DNS TXT 레코드만 가능   |
+| **URL 접두어** | 입력한 주소(프로토콜·경로)와 일치하는 URL | HTML 태그, 파일 등 다양 |
+
+- **도메인** 속성은 `www` 유무나 프로토콜에 관계없이 전체를 한 번에 관리할 수 있지만 DNS 접근 권한이 필요합니다.
+- **URL 접두어** 속성은 인증 방법이 다양해 진입 장벽이 낮습니다. 개인 블로그라면 이쪽이 간단합니다.
+
+저는 **URL 접두어**를 선택하고 배포 주소(`https://seokgenius-dev.vercel.app`)를 입력했습니다. URL 접두어 방식은 `http://`와 `https://`, `www` 유무가 각각 **다른 속성**으로 취급되므로 실제 서비스 주소와 정확히 일치하게 입력해야 합니다.
+
+## 2. 소유권 확인 (HTML 태그)
+
+속성을 추가하면 사이트 소유자인지 확인하는 단계가 이어집니다. 여러 방법 중 **HTML 태그** 방식을 사용했습니다.
+
+![HTML 태그 소유권 확인](/static/images/posts/google-search-console/gsc-2.png)
+
+GSC가 제공하는 메타태그를 `<head>`에 추가하면 됩니다.
+
+```html
+<meta name="google-site-verification" content="발급받은_확인_코드" />
+```
+
+Next.js App Router에서는 태그를 직접 붙여넣는 대신 `app/layout.tsx`의 `metadata`에 `verification` 필드로 선언하면 `<head>`에 자동 반영됩니다.
+
+```typescript
+// app/layout.tsx
+export const metadata: Metadata = {
+  // ... 기존 metadata
+  verification: {
+    google: '발급받은_확인_코드',
+  },
+}
+```
+
+배포가 완료된 후 GSC에서 **확인** 버튼을 클릭하면 소유권 확인이 끝납니다.
+
+> 확인이 완료된 후에도 메타태그를 삭제하면 소유권이 해제될 수 있으므로 그대로 유지합니다.
+
+### 다른 확인 방법
+
+| 방법              | 설명                                                        |
+| ----------------- | ----------------------------------------------------------- |
+| HTML 파일         | 제공받은 `googleXXXX.html`을 `public/`에 넣고 배포          |
+| DNS TXT 레코드    | 도메인 DNS에 TXT 레코드 추가 (도메인 속성은 이 방법만 가능) |
+| Google 애널리틱스 | 이미 GA가 연결되어 있다면 해당 계정으로 확인                |
+
+## 3. 사이트맵 제출
+
+소유권 확인이 끝나면 Google 크롤러가 사이트 구조를 빠르게 파악할 수 있도록 사이트맵을 제출합니다.
+
+1. 왼쪽 메뉴 → **색인 생성 → Sitemaps**
+2. **새 사이트맵 추가** 입력란에 `sitemap.xml` 입력
+3. **제출** 클릭
+
+![사이트맵 제출](/static/images/posts/google-search-console/gsc-3.png)
+
+제출 후 상태가 **성공**으로 표시되면 정상 처리된 것입니다. 사이트맵은 한 번 제출하면 이후 Google이 주기적으로 다시 크롤링하므로, 새 글을 쓸 때마다 다시 제출할 필요는 없습니다.
+
+## 4. 색인 요청 (선택)
+
+새로 등록한 직후이거나 중요한 글을 올렸다면 개별 URL의 색인을 직접 요청할 수 있습니다.
+
+1. 상단 **URL 검사** 검색창에 페이지 URL 입력
+2. **색인 생성 요청** 클릭
+
+요청해도 즉시 색인되지는 않습니다. Google 크롤러가 방문해 처리하기까지 **며칠에서 몇 주**가 걸릴 수 있습니다.
+
+## 5. 결과 확인
+
+등록 후 며칠 지나면 **실적** 메뉴에서 검색 노출이 시작되는 것을 확인할 수 있습니다.
+
+![실적 그래프](/static/images/posts/google-search-console/gsc-4.png)
+
+등록 4일 차부터 노출이 잡히기 시작했습니다. 이후 주기적으로 확인하면 좋은 메뉴는 다음과 같습니다.
+
+| 메뉴                     | 용도                          |
+| ------------------------ | ----------------------------- |
+| **실적**                 | 검색 노출 수, 클릭 수, 검색어 |
+| **색인 생성 → 페이지**   | 색인된/미색인 URL과 제외 사유 |
+| **색인 생성 → Sitemaps** | 사이트맵 처리 상태            |
+
+## 체크리스트
+
+- [ ] 배포된 사이트에서 `sitemap.xml`, `robots.txt` 접근 확인
+- [ ] GSC 속성 추가 (URL 접두어, 실제 배포 주소와 일치)
+- [ ] `app/layout.tsx`에 `verification.google` 추가 후 배포
+- [ ] GSC에서 소유권 확인 완료
+- [ ] 사이트맵 제출 및 상태 **성공** 확인
+- [ ] 주요 페이지 URL 검사로 색인 요청
+- [ ] 실적 메뉴에서 노출 시작 여부 모니터링
+
+## 참고
+
+- [Google Search Console](https://search.google.com/search-console)
+- [Search Console 시작하기 - Google 공식 문서](https://developers.google.com/search/docs/monitor-debug/search-console-start?hl=ko)
+- [Next.js Metadata - verification](https://nextjs.org/docs/app/api-reference/functions/generate-metadata#verification)
