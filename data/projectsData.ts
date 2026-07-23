@@ -8,7 +8,7 @@ interface Project {
 const projectsData: Project[] = [
   {
     title: 'Golfzon - Campaign tool',
-    description: `골프존의 메시지 및 푸시 통합 발송 내부 백오피스 캠페인 도구 개발 프로젝트. Vite, Vue 3, Pinia, Element Plus 등을 적용하여 대대적인 번들 성능 단축 및 UI 편의성 고도화를 수행했습니다.`,
+    description: `골프존의 메시지 및 푸시 통합 발송 내부 백오피스 캠페인 도구 개발 프로젝트. Vite 8(Rolldown) 업그레이드로 빌드 시간 73%를 단축하고, Vue 3·Pinia·Element Plus 기반의 타겟 마케팅 시스템을 구축했습니다.`,
     imgSrc: '/static/images/projects/golfzon-campaign-tool.png',
     href: '/projects/golfzon-campaign-tool',
   },
@@ -25,7 +25,7 @@ const projectsData: Project[] = [
   },
   {
     title: 'Golfzon - Benefit Zone',
-    description: `골프존 앱 내 혜택존 리뉴얼. 스크롤 인터랙티브 스윙만보기 소개 페이지, 로컬스토리지 활용 '오늘 하루 보지 않기' 모듈 및 미션 마일리지 적립을 위한 다이나믹 팝업 애니메이션을 구축했습니다.`,
+    description: `골프존 앱 내 혜택존 리뉴얼. 스크롤 애니메이션·팝업 모듈을 구축하고, Vue CLI에서 Vite 6으로 이관해 빌드 시간 61%를 단축했습니다.`,
     href: '/projects/golfzon-benefit-zone',
   },
   {

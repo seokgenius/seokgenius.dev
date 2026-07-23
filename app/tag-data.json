@@ -1,11 +1,15 @@
 {
-  "nextjs": 1,
+  "nextjs": 2,
   "giscus": 1,
   "github": 1,
   "pliny": 1,
-  "vue": 1,
+  "seo": 1,
+  "google-search-console": 1,
+  "vue": 2,
   "typescript": 1,
-  "vite": 1,
+  "vite": 2,
   "rolldown": 1,
-  "migration": 1
+  "migration": 2,
+  "vue-cli": 1,
+  "webpack": 1
 }

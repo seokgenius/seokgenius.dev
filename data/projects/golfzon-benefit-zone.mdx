@@ -1,9 +1,9 @@
 ---
 title: 'Golfzon - Benefit Zone'
 date: '2026-05-06'
-tags: ['vue', 'mobile', 'javascript', 'animation']
+tags: ['vue', 'vite', 'mobile', 'javascript', 'animation']
 draft: false
-summary: '골프존 앱 내 혜택존의 대대적인 UI 개편 및 다양한 상호작용성 스크롤 애니메이션, 로컬스토리지 기반 팝업 관리 모듈을 신규 구축했습니다.'
+summary: '골프존 앱 내 혜택존 UI 개편과 스크롤 애니메이션·팝업 모듈을 구축하고, Vue CLI(webpack)에서 Vite 6으로 빌드 시스템을 이관해 빌드 시간 61%를 단축했습니다.'
 ---
 
 # Golfzon - Benefit Zone
@@ -14,6 +14,7 @@ summary: '골프존 앱 내 혜택존의 대대적인 UI 개편 및 다양한 �
 
 - **Node.js**: `22.14.0`
 - **Framework**: Vue.js `3.2.13`
+- **Build Tool**: Vite `6.4.3` (Vue CLI / webpack 5에서 이관)
 - **State Management**: Pinia
 - **Platform**: 모바일 하이브리드 앱 웹뷰 환경
 
@@ -32,3 +33,11 @@ summary: '골프존 앱 내 혜택존의 대대적인 UI 개편 및 다양한 �
 
 - **오늘 하루 보지 않기**: 로컬 스토리지 데이터 관리를 바탕으로 매일 하루 단위 팝업 기한을 계산하는 유틸 기능을 모듈화하여, 사용자의 앱 이용 피로도를 낮추었습니다.
 - **마일리지 팝업 애니메이션**: 미션을 클리어한 사용자가 골프존 마일리지를 획득할 때, 생동감 넘치는 팝업의 모션 연출(Vue transition)을 지원하여 성취감(Gamification)을 자극했습니다.
+
+### 4. Vue CLI → Vite 6 마이그레이션
+
+`vue-cli-service`(webpack 5) 기반 빌드를 **Vite 6**으로 이관하고, 단일 `app.js`(약 1.8 MiB) 구조에 라우트·라이브러리 단위 코드 스플리팅을 도입했습니다. 상세 과정은 [Vue CLI → Vite 6 마이그레이션](/posts/vue-cli-to-vite-migration/)에 정리했습니다.
+
+- `process.env.VUE_APP_*` define 치환, `require()` 변환, SCSS `@use` 자동 주입 등 Vue CLI 호환 레이어를 구성해 소스 변경을 최소화했습니다.
+- webpack 폴리필(`global`) 의존 코드와 ESM 순환 참조 이슈를 정리하고, `vue.config.js`·`legacy/vue-cli/`로 롤백 경로를 확보했습니다.
+- 프로덕션 빌드 중앙값 **19.43s → 7.57s (61% 단축)**, CSS 총량 **100.3 KB → 66.7 KB (33.5% 감소)**, 라우트 청크 13개 + 라이브러리 청크 7개로 lazy load를 적용했습니다.

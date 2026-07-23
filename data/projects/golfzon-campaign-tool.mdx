@@ -1,9 +1,9 @@
 ---
 title: 'Golfzon - Campaign tool'
 date: '2026-06-11'
-tags: ['vue', 'typescript', 'backoffice']
+tags: ['vue', 'typescript', 'vite', 'backoffice']
 draft: false
-summary: '골프존의 메시지 및 푸시 통합 발송 내부 백오피스 캠페인 도구 개발 프로젝트입니다. Vite, Vue 3, Pinia, Element Plus 등을 적용하여 대폭적인 성능 향상과 아키텍처 개선을 수행했습니다.'
+summary: '골프존의 메시지 및 푸시 통합 발송 내부 백오피스 캠페인 도구 개발 프로젝트입니다. Vite 8(Rolldown) 업그레이드로 빌드 시간 73%를 단축하고, Vue 3·Pinia·Element Plus 기반의 타겟 마케팅 시스템을 구축했습니다.'
 ---
 
 # Golfzon - Campaign tool
@@ -21,7 +21,7 @@ summary: '골프존의 메시지 및 푸시 통합 발송 내부 백오피스 �
 
 - **Runtime & Language**: Node.js `22.14.0`, TypeScript `5.9.3` (Strict Mode)
 - **Framework**: Vue.js `3.5.25` (Composition API, `<script setup>`)
-- **Build Tool**: Vite `7.3.1`
+- **Build Tool**: Vite `8.0.16` (Rolldown + Oxc)
 - **State Management**: Pinia
 - **UI Library & Styling**: Element Plus, Tailwind CSS, Sass
 - **Routing**: Vue Router
@@ -36,6 +36,14 @@ summary: '골프존의 메시지 및 푸시 통합 발송 내부 백오피스 �
 
 - 기존의 골프존 백오피스 레거시가 모두 `vue-cli` + `vuetify` 기반이었으나, 개발 생산성과 모던 웹 생태계 대응을 위해 **Vite + Element Plus + Tailwind CSS**의 조합을 적극 도입하였습니다.
 - 이를 통해 개발 서빙 및 프로덕션 빌드 속도를 획기적으로 개선하여 로컬 개발 생산성을 극대화하였습니다.
+
+### 1-1. Vite 7 → Vite 8 마이그레이션
+
+최초 QA 직전 Vite 8 안정화 버전이 출시되어, esbuild+Rollup 이중 파이프라인을 **Rolldown(Rust) + Oxc**로 교체하는 업그레이드를 선행 적용했습니다. 상세 과정은 [Vite 7 → Vite 8 마이그레이션](/posts/vite8-migration/)에 정리했습니다.
+
+- `rollupOptions` / `manualChunks` → `rolldownOptions` / `codeSplitting.groups`로 청크 분리 전략을 이전하고, 벤더 그룹(element-plus, fullcalendar 등 10개)은 유지했습니다.
+- 로컬 프로덕션 빌드 중앙값 **7.29s → 1.99s (73% 단축)**, Jenkins 배포 환경에서도 **8.89s → 2.01s (77% 단축)**을 확인했습니다.
+- JS/CSS 산출물 총량은 ±0.3% 이내로 기능·용량 회귀 없이 전환했습니다.
 
 ### 2. 고도화된 타겟 마케팅 및 발송 관리 시스템 설계
 
