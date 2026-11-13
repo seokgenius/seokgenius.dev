@@ -1,9 +1,10 @@
 ---
 title: 'Golfzon - Campaign tool'
 date: '2026-06-11'
+lastmod: '2026-11-13'
 tags: ['vue', 'typescript', 'vite', 'backoffice']
 draft: false
-summary: '골프존의 메시지 및 푸시 통합 발송 내부 백오피스 캠페인 도구 개발 프로젝트입니다. Vite 8(Rolldown) 업그레이드로 빌드 시간 73%를 단축하고, Vue 3·Pinia·Element Plus 기반의 타겟 마케팅 시스템을 구축했습니다.'
+summary: '골프존의 메시지 및 푸시 통합 발송 내부 백오피스 캠페인 도구 개발 프로젝트입니다. Vite 8 업그레이드 이후 오퍼·대조군·소재 테스트와 대상자 조건 세분화를 반영한 v0.19 발송 체계로 고도화했습니다.'
 ---
 
 # Golfzon - Campaign tool
@@ -19,12 +20,12 @@ summary: '골프존의 메시지 및 푸시 통합 발송 내부 백오피스 �
 
 ## 🛠️ 기술 스택 (Spec)
 
-- **Runtime & Language**: Node.js `22.14.0`, TypeScript `5.9.3` (Strict Mode)
+- **Runtime & Language**: Node.js `22.23.4`, TypeScript `6.0.3` (Strict Mode)
 - **Framework**: Vue.js `3.5.25` (Composition API, `<script setup>`)
-- **Build Tool**: Vite `8.0.16` (Rolldown + Oxc)
+- **Build Tool**: Vite `8.1.0` (Rolldown + Oxc)
 - **State Management**: Pinia
-- **UI Library & Styling**: Element Plus, Tailwind CSS, Sass
-- **Routing**: Vue Router
+- **UI Library & Styling**: Element Plus, Tailwind CSS `4`, Sass
+- **Routing**: Vue Router `5`
 - **Validation**: Vee-Validate + Zod
 - **Utilities**: Axios, Day.js
 
@@ -44,6 +45,7 @@ summary: '골프존의 메시지 및 푸시 통합 발송 내부 백오피스 �
 - `rollupOptions` / `manualChunks` → `rolldownOptions` / `codeSplitting.groups`로 청크 분리 전략을 이전하고, 벤더 그룹(element-plus, fullcalendar 등 10개)은 유지했습니다.
 - 로컬 프로덕션 빌드 중앙값 **7.29s → 1.99s (73% 단축)**, Jenkins 배포 환경에서도 **8.89s → 2.01s (77% 단축)**을 확인했습니다.
 - JS/CSS 산출물 총량은 ±0.3% 이내로 기능·용량 회귀 없이 전환했습니다.
+- 이후 빌드 체인은 Vite `8.1.0`, TypeScript `6.0`, Vue Router `5`, Node.js `22.23.4`까지 올렸습니다.
 
 ### 2. 고도화된 타겟 마케팅 및 발송 관리 시스템 설계
 
@@ -71,3 +73,23 @@ summary: '골프존의 메시지 및 푸시 통합 발송 내부 백오피스 �
 
 - Cursor IDE의 **Agent 모드** 개발 표준을 도입하기 위해 `.cursor/rules` 및 `.mdc` 파일에 아키텍처 규칙과 프로젝트 코딩 컨벤션을 정의했습니다.
 - Git 브랜치 전략 및 커밋 컨벤션을 명문화하여 팀 협업의 퀄리티를 대폭 상향 평준화했습니다.
+
+### 6. 발송 운영 고도화
+
+2026년 7–9월에는 작성·승인·통계 화면의 운영 규칙을 발송 단계에 모았습니다.
+
+- **EAM 권한**: 캠페인 버튼과 설정 메뉴를 EAM API 권한으로 검사하는 컴포저블로 통일했습니다.
+- **야간 발송 제한**: 문자·푸시 캠페인의 야간 제한 시간을 두고, 야간 일시정지 상태에서도 발송 중지로 바꿀 수 있게 했습니다.
+- **발송 시뮬레이션**: 이메일 시뮬레이터를 추가하고, 문자·푸시 시뮬레이션에 수신 동의 제외를 반영했습니다. 푸시 동의 조건에서는 전체 회원이 대상에 섞이지 않도록 막았습니다.
+- **기본 수신자**: 발송 그룹 수정에서 기본 수신자를 직접 입력할 수 있게 했습니다.
+- **푸시 G멤버십 이벤트**: 푸시 캠페인 작성에 G멤버십 이벤트를 넣고, 이벤트 기간의 시작·종료 제약을 적용했습니다. 통계 상세에도 G멤버십 케이스를 추가했습니다.
+
+### 7. 캠페인 v0.19 — 오퍼, 대조군, 소재 테스트
+
+2026년 10–11월 기획(v0.19)에 맞춰 캠페인 단위 발송을 오퍼·대조군 구조로 확장했습니다.
+
+- **목록과 현황**: 캠페인 목록을 새로 만들고 발송 현황을 리뉴얼했습니다. 대시보드 현황·캘린더·최근 발송·발송 현황을 캠페인 목적과 검색 대상으로 조회합니다.
+- **대상자 그룹**: 대상 유형과 생일 대상자를 추가하고, 고객 조건을 세분화한 뒤 예상 인원을 자동 조회합니다. 조건이 없어도 전체 인원을 미리 보고 저장할 수 있습니다. 결제·스크린 예약 조건에는 전체 선택이 들어갑니다.
+- **소재 테스트와 대조군**: 문자·푸시 발송 작성에 대조군과 소재 테스트를 반영하고, 발송 상세에서 소재·대조군·시뮬레이션을 함께 봅니다. 문자 소재 테스트 상세는 푸시와 같은 표로 맞췄습니다.
+- **오퍼 통계**: 캠페인별 통계를 오퍼 통계로 재구성하고, 통계 상세와 발송 리포트에서 대상자 그룹 등록까지 이어지도록 했습니다.
+- 화면 경로는 발송 관리(`deliveryManage`), 발송 현황(`deliveryStatus`), 발송 태그(`deliveryTag`)로 정리했습니다.

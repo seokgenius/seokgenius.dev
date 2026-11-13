@@ -1,9 +1,10 @@
 ---
 title: 'Golfzon - GSTAT'
 date: '2026-06-04'
+lastmod: '2026-08-13'
 tags: ['vue', 'javascript', 'backoffice', 'refactoring']
 draft: false
-summary: '골프존의 레거시 통계 시스템(GSTAT)을 Vue 3, Vite, Pinia, PrimeVue 기반으로 현대화하고 고도화된 인터랙티브 그리드 기능들을 추가한 마이그레이션 프로젝트입니다.'
+summary: '골프존의 레거시 통계 시스템(GSTAT)을 Vue 3, Vite 8, Pinia, PrimeVue 기반으로 현대화하고, 매트릭스 차트의 일·주·월 집계와 인터랙션을 보강한 마이그레이션 프로젝트입니다.'
 ---
 
 # Golfzon - GSTAT
@@ -22,7 +23,7 @@ summary: '골프존의 레거시 통계 시스템(GSTAT)을 Vue 3, Vite, Pinia, 
 | **State Management**      | Vuex                 | **Pinia**                                     |
 | **UI Template**           | AdminLTE             | **Sakai Vue (PrimeVue 기반)**                 |
 | **Styling**               | Bootstrap            | **Tailwind CSS + SCSS**                       |
-| **Build Tool & Language** | Webpack, JavaScript  | **Vite, JavaScript**                          |
+| **Build Tool & Language** | Webpack, JavaScript  | **Vite 8, JavaScript (dayjs)**                |
 
 ---
 
@@ -58,3 +59,12 @@ summary: '골프존의 레거시 통계 시스템(GSTAT)을 Vue 3, Vite, Pinia, 
 ### 6. AI 기반 개발 파이프라인 연계
 
 - Cursor IDE의 AI 개발 에이전트를 적극 사용하여 프로젝트의 아키텍처 규범(`.mdc` ruleset)을 강제 적용해 코드 가독성과 재사용성을 큰 폭으로 보장했습니다.
+
+### 7. Vite 8 이관과 매트릭스 차트 보강
+
+글 작성 직후인 2026년 6월, 빌드 체인을 Vite 5에서 **Vite 8**로 올리고 남은 `moment`·`numeral` 의존을 `dayjs`로 정리했습니다. 라우터는 hash 모드로 바꿔, 새로고침 때 데이터 추출 화면이 다시 조회되지 않던 문제를 함께 맞췄습니다. 관리자 권한에는 데이터 추출 설정 항목을 추가했습니다.
+
+2026년 8월에는 매트릭스 차트의 읽기 방식을 보강했습니다.
+
+- 일/주/월 집계를 선택하고, Y축은 중앙 스케일로 맞춰 값의 높낮이를 비교하기 쉽게 했습니다.
+- 차트 등장 애니메이션, hover 시 점 크기, 인접한 X축에 접근하면 뜨는 툴팁, 세로 그리드를 추가했습니다.

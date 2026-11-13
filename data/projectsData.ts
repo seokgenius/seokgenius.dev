@@ -8,25 +8,30 @@ interface Project {
 const projectsData: Project[] = [
   {
     title: 'Golfzon - Campaign tool',
-    description: `골프존의 메시지 및 푸시 통합 발송 내부 백오피스 캠페인 도구 개발 프로젝트. Vite 8(Rolldown) 업그레이드로 빌드 시간 73%를 단축하고, Vue 3·Pinia·Element Plus 기반의 타겟 마케팅 시스템을 구축했습니다.`,
+    description: `골프존의 메시지 및 푸시 통합 발송 내부 백오피스. Vite 8 업그레이드 이후 오퍼·대조군·소재 테스트와 대상자 조건 세분화를 반영한 v0.19 발송 체계로 고도화했습니다.`,
     imgSrc: '/static/images/projects/golfzon-campaign-tool.png',
     href: '/projects/golfzon-campaign-tool',
   },
   {
     title: 'Golfzon - GSTAT',
-    description: `골프존 통계 시스템 리팩토링 프로젝트. 기존 레거시 vue-cli 및 admin-lte 스택을 Vue 3 + Vite + Pinia + PrimeVue 조합으로 전면 개선하고, 컬럼 드래그 앤 드롭 및 스프레드시트 입력을 구현했습니다.`,
+    description: `골프존 통계 시스템 리팩토링 프로젝트. 레거시 vue-cli 및 admin-lte 스택을 Vue 3 + Vite 8 + Pinia + PrimeVue로 이관하고, 매트릭스 차트의 일·주·월 집계와 스프레드시트 입력을 구현했습니다.`,
     imgSrc: '/static/images/projects/golfzon-gstat.png',
     href: '/projects/golfzon-gstat',
   },
   {
     title: 'Golfzon - Plusshop',
-    description: `골프존 모바일 앱 플러스샵 유지보수. 홀인원볼 자동결제 UI 고도화 등 모바일 웹뷰 환경에서 네이티브 수준의 원활하고 부드러운 트랜지션 애니메이션 및 UI 연동 제어를 담당했습니다.`,
+    description: `골프존 앱 플러스샵. 아이템 현장결제·미납금 납부·AI 코스매니저 이벤트를 추가하고 웹뷰를 Vite 7로 이관했습니다. 어드민에는 PG 정산과 멤버십 1회 이용권 미수 관리를 넣었습니다.`,
     href: '/projects/golfzon-plusshop',
   },
   {
     title: 'Golfzon - Benefit Zone',
-    description: `골프존 앱 내 혜택존 리뉴얼. 스크롤 애니메이션·팝업 모듈을 구축하고, Vue CLI에서 Vite 6으로 이관해 빌드 시간 61%를 단축했습니다.`,
+    description: `골프존 앱 내 혜택존 리뉴얼. Vite 6 이관 이후 복권 랭킹 챌린지·혜택관 브릿지와 운영 어드민의 이벤트·당첨 관리를 추가했습니다.`,
     href: '/projects/golfzon-benefit-zone',
+  },
+  {
+    title: 'Golfzon - Mobile Coupon',
+    description: `골프존 앱 쿠폰함(이용권) 운영 백오피스. 발행·발송·사용현황·정산과 외부제휴·가맹 매장 제한을 다루고, 쿠폰함 웹뷰에서는 iOS 확인코드 입력이 키보드에 가리지 않도록 맞췄습니다.`,
+    href: '/projects/golfzon-mobile-coupon',
   },
   {
     title: 'SLW - Graphit',
